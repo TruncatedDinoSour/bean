@@ -1,5 +1,5 @@
-#ifndef _COMMANDS_H
-#define _COMMANDS_H
+#ifndef _CMDMGR_C
+#define _CMDMGR_C
 
 typedef struct {
     const char *const name;
@@ -8,7 +8,7 @@ typedef struct {
 
 const Command *find_command(const char *const, const Command *);
 
-#ifdef COMMANDS_IMPL
+#ifdef CMDMGR_IMPL
 #include <sys/types.h>
 #include <string.h>
 
@@ -22,5 +22,5 @@ const Command *find_command(const char *const name, const Command commands[]) {
 
     return NULL;
 }
-#endif /* COMMANDS_IMPL */
-#endif /* _COMMANDS_H */
+#endif /* CMDMGR_IMPL */
+#endif /* _CMDMGR_C */

@@ -1,22 +1,24 @@
-#include <stdio.h>
-#include <curl/curl.h>
+#include "cmdmgr.c"
+#include "cmds.c"
+#include "logging.h"
+#include "clrs.h"
 
-#include "commands.c"
-
-int cmd_install(char **);
-
-static const Command cmds[] = {
-    {"install", cmd_install},
-    {NULL, NULL},
-};
-
-int cmd_install(char *argv[]) {
-    puts(argv[0]);
-    return 0;
-}
+extern const Command cmds[];
 
 int main(int argc, char *argv[]) {
-    find_command("install", cmds)->cmd(argv);
+    const Command *c;
 
-    return 0;
+    if (argc < 2) {
+        LOG_ERROR("no subcommand supplied");
+        cmd_help(argv);
+        return 1;
+    }
+
+    c = find_command(argv[1], cmds);
+
+    if (c == NULL)
+        FLOG_ERROR_RET("no such command : " CLR_BOLD "%s" CLR_RESET "\n",
+                       argv[1]);
+
+    return c->cmd(argv);
 }
