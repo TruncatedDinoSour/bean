@@ -51,7 +51,7 @@ void remove_directory(String path) {
 }
 
 Str chroot_setup(String name) {
-    unsigned char idx;
+    UChar idx;
     const Mount *m;
 
     if (mkdir(name, 0700) == -1)
@@ -73,7 +73,7 @@ Str chroot_setup(String name) {
 }
 
 Str chroot_destroy(String name) {
-    unsigned char idx;
+    UChar idx;
     const Mount *m;
 
     if (access(name, F_OK) != 0)

@@ -2,8 +2,8 @@
 #include <stdarg.h>
 
 #include "clrs.h"
-#include "logging.h"
 #include "types.h"
+#include "logging.h"
 
 void vlog_print(String head, String clr, String fmt, va_list args) {
     fprintf(stdout, "%s%s" CLR_RESET " ", clr, head);
@@ -41,7 +41,7 @@ void flog_info(String fmt, ...) {
 
 void log_info(String msg) { flog_info("%s\n", msg); }
 
-unsigned char flog_error(String fmt, ...) {
+UChar flog_error(String fmt, ...) {
     va_list args;
     va_start(args, fmt);
 
@@ -51,7 +51,7 @@ unsigned char flog_error(String fmt, ...) {
     return 1;
 }
 
-unsigned char log_error(String msg) {
+UChar log_error(String msg) {
     flog_error("%s\n", msg);
     return 1;
 }

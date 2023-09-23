@@ -15,6 +15,6 @@ void log_normal(String);
 void flog_info(String, ...) __attribute__((format(printf, 1, 0)));
 void log_info(String);
 
-unsigned char flog_error(String, ...) __attribute__((format(printf, 1, 0)));
-unsigned char log_error(String);
+UChar flog_error(String, ...) __attribute__((format(printf, 1, 0)));
+UChar log_error(String);
 #endif /* _LOGGING_H */
