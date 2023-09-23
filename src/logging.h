@@ -1,28 +1,13 @@
 #ifndef _LOGGING_H
 #define _LOGGING_H
-#include <stdio.h>
+void log_print(const char *, const char *, const char *, ...) __attribute__((format(printf, 3, 4)));
 
-#include "clrs.h"
+void flog_normal(const char *, const char *);
+void log_normal(const char *);
 
-#define LOG_PRINT(head, clr, fmt, ...) \
-    printf(clr head CLR_RESET " " fmt, __VA_ARGS__)
+void flog_info(const char *, const char *);
+void log_info(const char *);
 
-#define FLOG_NORMAL(fmt, msg) LOG_PRINT("log  ", CLR_BOLD, fmt, msg)
-#define LOG_NORMAL(msg)       FLOG_NORMAL("%s\n", msg)
-
-#define FLOG_INFO(fmt, msg) LOG_PRINT("info ", CLR_BOLD CLR_BLUE, fmt, msg)
-#define LOG_INFO(msg)       FLOG_INFO("%s\n", msg)
-
-#define FLOG_ERROR(fmt, msg) LOG_PRINT("error", CLR_BOLD CLR_RED, fmt, msg)
-#define LOG_ERROR(msg)       FLOG_ERROR("%s\n", msg)
-#define FLOG_ERROR_RET(fmt, msg) \
-    do {                         \
-        FLOG_ERROR(fmt, msg);    \
-        return 1;                \
-    } while (0)
-#define LOG_ERROR_RET(msg) \
-    do {                   \
-        LOG_ERROR(msg);    \
-        return 1;          \
-    } while (0)
+unsigned char flog_error(const char *, const char *);
+unsigned char log_error(const char *);
 #endif /* _LOGGING_H */

@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <dirent.h>
@@ -36,7 +35,9 @@ void remove_directory(const char *const path) {
             continue;
         }
 
-        snprintf(filepath, sizeof(filepath), "%s/%s", path, entry->d_name);
+        strcpy(filepath, path);
+        strcat(filepath, "/");
+        strcat(filepath, entry->d_name);
 
         if (entry->d_type == DT_DIR)
             remove_directory(filepath);
