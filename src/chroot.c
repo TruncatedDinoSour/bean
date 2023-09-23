@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/mount.h>
@@ -6,10 +7,6 @@
 
 #include "types.h"
 #include "chroot.h"
-
-#ifndef PATH_MAX
-#define PATH_MAX 4096
-#endif
 
 #ifndef DT_DIR
 #define DT_DIR 4
@@ -25,7 +22,9 @@ static const size_t mounts_sz = sizeof(mounts) / sizeof(mounts[0]);
 void remove_directory(String path) {
     DIR *dir;
     struct dirent *entry;
-    char filepath[PATH_MAX + 1];
+
+    char *filepath;
+    size_t fp_len, dn_len;
 
     if ((dir = opendir(path)) == NULL)
         return;
@@ -36,14 +35,21 @@ void remove_directory(String path) {
             continue;
         }
 
-        strcpy(filepath, path);
-        strcat(filepath, "/");
-        strcat(filepath, entry->d_name);
+        fp_len = strlen(path);
+        dn_len = strlen(entry->d_name);
+
+        filepath = malloc(fp_len + dn_len + 2); /* +2 for `/` and `\0` */
+
+        strncpy(filepath, path, fp_len);
+        filepath[fp_len] = '/';
+        strncat(filepath, entry->d_name, dn_len);
 
         if (entry->d_type == DT_DIR)
             remove_directory(filepath);
         else
             unlink(filepath);
+
+        free(filepath);
     }
 
     closedir(dir);
