@@ -7,23 +7,12 @@
 int main(const int argc, const char *const argv[]) {
     extern const Command cmds[];
     const Command *c;
-    /* const char *x; */
 
     if (argc < 2) {
         LOG_ERROR("no subcommand supplied");
         cmd_help(argv);
         return 1;
     }
-
-    /* x = chroot_setup("hello"); */
-
-    /* if (x != NULL) */
-    /*     printf("%s\n", x); */
-
-    /* x = chroot_destroy("hello"); */
-
-    /* if (x != NULL) */
-    /*     printf("%s\n", x); */
 
     c = find_command(argv[1], cmds);
 
