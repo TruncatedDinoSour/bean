@@ -1,7 +1,8 @@
 #ifndef _LOGGING_H
 #define _LOGGING_H
-#include "clrs.h"
 #include <stdio.h>
+
+#include "clrs.h"
 
 #define LOG_PRINT(head, clr, fmt, ...) \
     printf(clr head CLR_RESET " " fmt, __VA_ARGS__)

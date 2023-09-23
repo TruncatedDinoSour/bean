@@ -1,21 +1,25 @@
 #ifndef _CMDS_C
 #define _CMDS_C
-#include "cmdmgr.c"
 #include <stddef.h>
 
-int cmd_help(char **);
+#include "cmdmgr.c"
+
+CMD_DEF(help);
+
+/* #define CMDS_IMPL */
 
 #ifdef CMDS_IMPL
-#include <stdio.h>
+#include <sys/types.h>
+
 #include "logging.h"
 
 const Command cmds[] = {
-    {"help", cmd_help},
-    {NULL, NULL},
+    {"help", CMD_NAME(help)},
+    {0},
 };
 
-int cmd_help(char *argv[]) {
-    unsigned idx = 0;
+CMD(help) {
+    size_t idx = 0;
     const Command *c;
 
     LOG_NORMAL("available subcommands");

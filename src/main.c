@@ -1,12 +1,13 @@
-#include "cmdmgr.c"
 #include "cmds.c"
-#include "logging.h"
 #include "clrs.h"
+#include "chroot.c"
+#include "cmdmgr.c"
+#include "logging.h"
 
-extern const Command cmds[];
-
-int main(int argc, char *argv[]) {
+int main(const int argc, const char *const argv[]) {
+    extern const Command cmds[];
     const Command *c;
+    const char *x;
 
     if (argc < 2) {
         LOG_ERROR("no subcommand supplied");
@@ -14,10 +15,20 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    x = chroot_setup("hello");
+
+    if (x != NULL)
+        printf("%s\n", x);
+
+    x = chroot_destroy("hello");
+
+    if (x != NULL)
+        printf("%s\n", x);
+
     c = find_command(argv[1], cmds);
 
     if (c == NULL)
-        FLOG_ERROR_RET("no such command : " CLR_BOLD "%s" CLR_RESET "\n",
+        FLOG_ERROR_RET("no such subcommand : " CLR_BOLD "%s" CLR_RESET "\n",
                        argv[1]);
 
     return c->cmd(argv);
