@@ -3,3 +3,4 @@
 *.elf
 *.swp
 /bean
+/obj

@@ -1,16 +1,7 @@
-#ifndef _CMDS_C
-#define _CMDS_C
 #include <stddef.h>
-
-#include "cmdmgr.c"
-
-CMD_DEF(help);
-
-/* #define CMDS_IMPL */
-
-#ifdef CMDS_IMPL
 #include <sys/types.h>
 
+#include "cmds.h"
 #include "logging.h"
 
 const Command cmds[] = {
@@ -31,5 +22,3 @@ CMD(help) {
 
     return 0;
 }
-#endif /* CMDS_IMPL */
-#endif /* _CMDS_C */

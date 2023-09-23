@@ -1,13 +1,13 @@
-#include "cmds.c"
+#include "cmds.h"
 #include "clrs.h"
-#include "chroot.c"
-#include "cmdmgr.c"
+#include "chroot.h"
+#include "cmdmgr.h"
 #include "logging.h"
 
 int main(const int argc, const char *const argv[]) {
     extern const Command cmds[];
     const Command *c;
-    const char *x;
+    /* const char *x; */
 
     if (argc < 2) {
         LOG_ERROR("no subcommand supplied");
@@ -15,15 +15,15 @@ int main(const int argc, const char *const argv[]) {
         return 1;
     }
 
-    x = chroot_setup("hello");
+    /* x = chroot_setup("hello"); */
 
-    if (x != NULL)
-        printf("%s\n", x);
+    /* if (x != NULL) */
+    /*     printf("%s\n", x); */
 
-    x = chroot_destroy("hello");
+    /* x = chroot_destroy("hello"); */
 
-    if (x != NULL)
-        printf("%s\n", x);
+    /* if (x != NULL) */
+    /*     printf("%s\n", x); */
 
     c = find_command(argv[1], cmds);
 

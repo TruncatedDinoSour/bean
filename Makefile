@@ -1,14 +1,17 @@
-bean: cmdmgr.o cmds.o chroot.o
-	$(CC) src/main.c $^ -o "$@" $(CFLAGS)
+SRC_DIR := src
+OBJ_DIR := obj
 
-cmdmgr.o: src/cmdmgr.c
-	$(CC) -c $^ -o $@ -DCMDMGR_IMPL $(CFLAGS)
+SRC_FILES := $(wildcard $(SRC_DIR)/*.c)
+OBJ_FILES := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
-cmds.o: src/cmds.c
-	$(CC) -c $^ -o $@ -DCMDS_IMPL $(CFLAGS)
+bean: $(OBJ_FILES)
+	$(CC) $^ -o $@ $(CFLAGS) $(LDFLAGS)
 
-chroot.o: src/chroot.c
-	$(CC) -c $^ -o $@ -DCHROOT_IMPL $(CFLAGS)
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) -c $< -o $@ $(CFLAGS) $(LDFLAGS)
 
 clean:
-	rm -f bean *.o
+	rm -rfv bean $(OBJ_DIR)

@@ -1,24 +1,11 @@
-#ifndef _CHROOT_H
-#define _CHROOT_H
-typedef struct {
-    const char *from, *to, *fs;
-    const unsigned long flags;
-    const char *msg;
-} Mount;
-
-void remove_directory(const char *const path);
-const char *chroot_setup(const char *const);
-const char *chroot_destroy(const char *const);
-
-/* #define CHROOT_IMPL */
-
-#ifdef CHROOT_IMPL
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/mount.h>
 #include <sys/stat.h>
+
+#include "chroot.h"
 
 #ifndef PATH_MAX
 #define PATH_MAX 4096
@@ -105,5 +92,3 @@ const char *chroot_destroy(const char *const name) {
 
     return NULL;
 }
-#endif /* CHROOT_IMPL */
-#endif /* _CHROOT_H */
