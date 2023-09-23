@@ -3,4 +3,5 @@
 #include "cmdmgr.h"
 
 CMD_DEF(help);
+CMD_DEF(sync);
 #endif /* _CMDS_H */

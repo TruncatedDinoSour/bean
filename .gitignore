@@ -4,3 +4,4 @@
 *.swp
 /bean
 /obj
+*.beanconf

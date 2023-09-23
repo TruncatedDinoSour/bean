@@ -1,6 +1,10 @@
 #ifndef _CLRS_H
 #define _CLRS_H
+#ifdef NO_CLR
+#define CLR(code) ""
+#else
 #define CLR(code) "\33[" code "m"
+#endif
 
 #define CLR_RESET     CLR("0")
 #define CLR_BOLD      CLR("1")

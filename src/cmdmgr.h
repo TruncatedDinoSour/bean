@@ -3,12 +3,12 @@
 #include "types.h"
 
 #define CMD_NAME(name) cmd_##name
-#define CMD_DEF(name)  int CMD_NAME(name)(String *)
-#define CMD(name)      int CMD_NAME(name)(String argv[])
+#define CMD_DEF(name)  short CMD_NAME(name)(String *)
+#define CMD(name)      short CMD_NAME(name)(String argv[])
 
 typedef struct {
-    String name;
-    int (*cmd)(String *);
+    String name, desc;
+    short (*cmd)(String *);
 } Command;
 
 const Command *find_command(String, const Command *);
