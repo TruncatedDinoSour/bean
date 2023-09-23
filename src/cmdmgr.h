@@ -1,13 +1,15 @@
 #ifndef _CMDMGR_H
 #define _CMDMGR_H
+#include "types.h"
+
 #define CMD_NAME(name) cmd_##name
-#define CMD_DEF(name) int CMD_NAME(name)(const char *const *)
-#define CMD(name) int CMD_NAME(name)(const char *const argv[])
+#define CMD_DEF(name)  int CMD_NAME(name)(String *)
+#define CMD(name)      int CMD_NAME(name)(String argv[])
 
 typedef struct {
-    const char *const name;
-    int (*cmd)(const char *const *);
+    String name;
+    int (*cmd)(String *);
 } Command;
 
-const Command *find_command(const char *const, const Command *);
+const Command *find_command(String, const Command *);
 #endif /* _CMDMGR_H */

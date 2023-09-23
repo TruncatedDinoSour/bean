@@ -2,8 +2,9 @@
 #include <sys/types.h>
 
 #include "cmdmgr.h"
+#include "types.h"
 
-const Command *find_command(const char *const name, const Command commands[]) {
+const Command *find_command(String name, const Command commands[]) {
     size_t idx = 0;
     const Command *c;
 

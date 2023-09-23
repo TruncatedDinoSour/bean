@@ -1,13 +1,16 @@
 #ifndef _LOGGING_H
 #define _LOGGING_H
-void log_print(const char *, const char *, const char *, ...) __attribute__((format(printf, 3, 4)));
+#include "types.h"
 
-void flog_normal(const char *, const char *);
-void log_normal(const char *);
+void log_print(String, String, String, ...)
+    __attribute__((format(printf, 3, 4)));
 
-void flog_info(const char *, const char *);
-void log_info(const char *);
+void flog_normal(String, String);
+void log_normal(String);
 
-unsigned char flog_error(const char *, const char *);
-unsigned char log_error(const char *);
+void flog_info(String, String);
+void log_info(String);
+
+unsigned char flog_error(String, String);
+unsigned char log_error(String);
 #endif /* _LOGGING_H */

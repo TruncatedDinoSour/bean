@@ -4,6 +4,7 @@
 #include <sys/mount.h>
 #include <sys/stat.h>
 
+#include "types.h"
 #include "chroot.h"
 
 #ifndef PATH_MAX
@@ -21,7 +22,7 @@ static const Mount mounts[] = {
 };
 static const size_t mounts_sz = sizeof(mounts) / sizeof(mounts[0]);
 
-void remove_directory(const char *const path) {
+void remove_directory(String path) {
     DIR *dir;
     struct dirent *entry;
     char filepath[PATH_MAX + 1];
@@ -49,7 +50,7 @@ void remove_directory(const char *const path) {
     rmdir(path);
 }
 
-const char *chroot_setup(const char *const name) {
+Str chroot_setup(String name) {
     unsigned char idx;
     const Mount *m;
 
@@ -71,7 +72,7 @@ const char *chroot_setup(const char *const name) {
     return NULL;
 }
 
-const char *chroot_destroy(const char *const name) {
+Str chroot_destroy(String name) {
     unsigned char idx;
     const Mount *m;
 

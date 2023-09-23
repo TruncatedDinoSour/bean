@@ -1,12 +1,14 @@
 #ifndef _CHROOT_H
 #define _CHROOT_H
+#include "types.h"
+
 typedef struct {
-    const char *from, *to, *fs;
+    String from, to, fs;
     const unsigned long flags;
-    const char *msg;
+    String msg;
 } Mount;
 
-void remove_directory(const char *const path);
-const char *chroot_setup(const char *const);
-const char *chroot_destroy(const char *const);
+void remove_directory(String);
+Str chroot_setup(String);
+Str chroot_destroy(String);
 #endif /* _CHROOT_H */
