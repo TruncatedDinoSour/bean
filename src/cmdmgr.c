@@ -1,5 +1,5 @@
 #include <string.h>
-#include <sys/types.h>
+#include <stddef.h>
 
 #include "cmdmgr.h"
 #include "types.h"

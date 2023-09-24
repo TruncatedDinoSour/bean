@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stddef.h>
-#include <sys/types.h>
 
 #include "cmds.h"
 #include "clrs.h"
