@@ -3,13 +3,13 @@
 #include "types.h"
 
 #define CMD_NAME(name) cmd_##name
-#define CMD_DEF(name)  UChar CMD_NAME(name)(String *)
+#define CMD_DEF(name)  UChar CMD_NAME(name)(String[])
 #define CMD(name)      UChar CMD_NAME(name)(String argv[])
 
 typedef struct {
     String name, desc;
-    UChar (*cmd)(String *);
+    UChar (*cmd)(String[]);
 } Command;
 
-const Command *find_command(String, const Command *);
+const Command *find_command(String, const Command[]);
 #endif /* _CMDMGR_H */

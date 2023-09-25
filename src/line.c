@@ -3,56 +3,43 @@
 #include <string.h>
 
 #include "line.h"
+#include "types.h"
 
-Line *split_line(char *line) {
-    size_t argc = 1, idx = 0, jdx, tlen;
-    char **argv = NULL, *token;
-    Line *l     = NULL;
+Line *line_split(String line) {
+    size_t argv_bound = LINE_ARGV_INC, length = strlen(line);
+    char *token, *buffer = malloc((length + 1) * sizeof(*buffer));
+    Line *result = malloc(sizeof(*result));
 
-    for (jdx = 0; line[jdx] != '\0'; ++jdx)
-        if (line[jdx] == ' ')
-            argc++;
+    result->argc = 0;
+    result->argv = malloc(argv_bound * sizeof(*result->argv));
 
-    /* allocate argv */
+    memcpy(buffer, line, length + 1);
 
-    if ((argv = malloc(argc * sizeof(*argv))) == NULL)
-        goto __split_line_cleanup; /* argv allocation failure */
-
-    /* split argv */
-
-    token = strtok(line, " ");
+    token = strtok(buffer, " ");
 
     while (token != NULL) {
-        tlen      = strlen(token);
-        argv[idx] = malloc(tlen + 1);
+        if (result->argc >= argv_bound) {
+            argv_bound += LINE_ARGV_INC;
+            result->argv =
+                realloc(result->argv, argv_bound * sizeof(*result->argv));
+        }
 
-        if (argv[idx] == NULL)
-            goto __split_line_cleanup; /* argument allocation failure */
-
-        memcpy(argv[idx], token, tlen + 1);
+        result->argv[result->argc] = malloc(strlen(token) + 1);
+        memcpy(result->argv[result->argc++], token, strlen(token) + 1);
 
         token = strtok(NULL, " ");
-        ++idx;
     }
 
-    if ((l = malloc(sizeof(Line))) == NULL)
-        goto __split_line_cleanup; /* `Line` allocation failure */
+    free(buffer);
 
-    l->argc = argc;
-    l->argv = argv;
+    return result;
+}
 
-    return l;
+void line_destroy(Line *line) {
+    if (line->argc > 0)
+        while (line->argc--)
+            free(line->argv[line->argc]);
 
-__split_line_cleanup: /* memory cleanup in case of error */
-    if (argv != NULL) {
-        for (jdx = 0; jdx < idx; ++jdx)
-            free(argv[jdx]);
-
-        free(argv);
-    }
-
-    if (l != NULL)
-        free(l);
-
-    return NULL;
+    free(line->argv);
+    free(line);
 }

@@ -10,6 +10,9 @@
 #include "const.h"
 #include "logging.h"
 
+#include "line.h"
+#include <stdio.h>
+
 extern const Command cmds[];
 
 int main(const int argc, String argv[]) {
@@ -39,8 +42,7 @@ int main(const int argc, String argv[]) {
     c = find_command(argv[1], cmds);
 
     if (c == NULL)
-        return flog_error("no such subcommand " CLR_BOLD "`%s`\n",
-                          argv[1]);
+        return flog_error("no such subcommand " CLR_BOLD "`%s`\n", argv[1]);
 
     return c->cmd(argv);
 }
