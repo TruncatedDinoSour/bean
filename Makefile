@@ -13,7 +13,7 @@ bean: $(OBJ_FILES)
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/%.h | $(OBJ_DIR)
 	$(CC) -c -o $@ $(CFLAGS) $< $(LDFLAGS)
 
 clean:
