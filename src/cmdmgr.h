@@ -2,7 +2,7 @@
 #define _CMDMGR_H
 #include "types.h"
 
-#define CMD_NAME(name) cmd_##name
+#define CMD_NAME(name) _cmd_##name
 #define CMD_DEF(name)  UChar CMD_NAME(name)(String[])
 #define CMD(name)      UChar CMD_NAME(name)(String argv[])
 

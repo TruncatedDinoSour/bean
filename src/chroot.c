@@ -56,7 +56,7 @@ void remove_directory(String path) {
     rmdir(path);
 }
 
-Str chroot_setup(String name) {
+MString chroot_setup(String name) {
     UChar idx;
     const Mount *m;
 
@@ -78,7 +78,7 @@ Str chroot_setup(String name) {
     return NULL;
 }
 
-Str chroot_destroy(String name) {
+MString chroot_destroy(String name) {
     UChar idx;
     const Mount *m;
 

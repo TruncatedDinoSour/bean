@@ -30,7 +30,7 @@ int main(const int argc, String argv[]) {
 
     if (argc < 2) {
         log_error("no subcommand supplied");
-        cmd_help(argv);
+        CMD_NAME(help)(argv);
         return 1;
     }
 

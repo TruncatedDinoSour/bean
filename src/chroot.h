@@ -9,6 +9,6 @@ typedef struct {
 } Mount;
 
 void remove_directory(String);
-Str chroot_setup(String);
-Str chroot_destroy(String);
+MString chroot_setup(String);
+MString chroot_destroy(String);
 #endif /* _CHROOT_H */
