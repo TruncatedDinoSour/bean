@@ -1,19 +1,14 @@
 #include <fcntl.h>
 #include <string.h>
-#include <stddef.h>
 #include <unistd.h>
 #include <sys/stat.h>
 
 #include "cmds.h"
 #include "clrs.h"
+#include "main.h"
 #include "types.h"
 #include "const.h"
 #include "logging.h"
-
-#include "line.h"
-#include <stdio.h>
-
-extern const Command cmds[];
 
 int main(const int argc, String argv[]) {
     int fd;
