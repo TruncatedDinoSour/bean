@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
-#include "cmds.h"
+#include "cli.h"
 #include "clrs.h"
 #include "main.h"
 #include "types.h"
@@ -34,7 +34,7 @@ int main(const int argc, String argv[]) {
         return 1;
     }
 
-    c = find_command(argv[1], cmds);
+    c = find_command(argv[1], cli_cmds);
 
     if (c == NULL)
         return flog_error("no such subcommand " CLR_BOLD "`%s`\n", argv[1]);
