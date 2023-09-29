@@ -7,5 +7,7 @@ typedef struct {
     CArray cans;
 } Config;
 
-void config_add(Config *, String);
+void config_init(void);
+UChar config_add(Config *, String);
+void config_del(void);
 #endif /* _CONFIG_H */

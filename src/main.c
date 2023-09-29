@@ -10,6 +10,8 @@
 #include "const.h"
 #include "logging.h"
 
+extern const Command cli_cmds[];
+
 int main(const int argc, String argv[]) {
     int fd;
     const Command *c;
