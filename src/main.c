@@ -11,8 +11,6 @@
 #include "config.h"
 #include "logging.h"
 
-#include <stdio.h>
-
 extern const Command cli_cmds[];
 
 int main(const int argc, String argv[]) {

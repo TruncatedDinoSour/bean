@@ -10,7 +10,7 @@ UChar kw_inited         = 0;
 
 const Kw kw_kws[] = {
     {"can", KW_NAME(can)},
-    {"note", KW_NAME(can)},
+    {"note", KW_NAME(note)},
 };
 const size_t kw_kws_sz = sizeof(kw_kws) / sizeof(kw_kws[0]);
 
