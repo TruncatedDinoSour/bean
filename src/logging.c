@@ -6,8 +6,9 @@
 #include "logging.h"
 
 void vlog_print(String head, String clr, String fmt, va_list args) {
-    fprintf(stdout, "%s%s" CLR_RESET " ", clr, head);
-    vfprintf(stdout, fmt, args);
+    printf("%s%s" CLR_RESET " ", clr, head);
+    vprintf(fmt, args);
+    fputs(CLR_RESET, stdout);
 }
 
 void log_print(String head, String clr, String fmt, ...) {

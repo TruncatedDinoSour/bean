@@ -1,8 +1,14 @@
 #include "config_kw.h"
 #include "config.h"
+#include "carray.h"
+#include "const.h"
 #include "types.h"
 #include "line.h"
-#include "carray.h"
+#include "file.h"
+
+#include <unistd.h>
+#include <stdlib.h>
+#include <fcntl.h>
 
 #include <stdio.h>
 
@@ -35,3 +41,22 @@ __config_add_cleanup:
 }
 
 void config_del(void) { line_destroy(&_config_line_arr); }
+
+UChar config_load(Config *cfg) {
+    char *line;
+    int fd;
+
+    if ((fd = open(CONFIG_FILE, O_RDONLY)) == -1)
+        return 1;
+
+    config_init();
+
+    while ((line = read_line(fd)) != NULL) {
+        config_add(cfg, line);
+        free(line);
+    }
+
+    close(fd);
+
+    return 0;
+}

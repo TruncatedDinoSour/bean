@@ -8,6 +8,7 @@
 #include "main.h"
 #include "types.h"
 #include "const.h"
+#include "config.h"
 #include "logging.h"
 
 extern const Command cli_cmds[];
@@ -15,6 +16,7 @@ extern const Command cli_cmds[];
 int main(const int argc, String argv[]) {
     int fd;
     const Command *c;
+    Config cfg = {0};
 
     if (access(CONFIG_FILE, F_OK) != 0) {
         flog_info("creating config file " CLR_BOLD "`%s`\n", CONFIG_FILE);
@@ -29,6 +31,9 @@ int main(const int argc, String argv[]) {
 
         chmod(CONFIG_FILE, CONFIG_FILE_PERMS);
     }
+
+    flog_info("loading config file " CLR_BOLD "`%s`\n", CONFIG_FILE);
+    config_load(&cfg);
 
     if (argc < 2) {
         log_error("no subcommand supplied");

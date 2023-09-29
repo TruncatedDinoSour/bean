@@ -26,5 +26,8 @@ void carray_clear(CArray *carr) {
 
 void carray_destroy(CArray *carr) {
     free(carr->arr);
+
     carr->arr = NULL;
+    carr->size = 0;
+    carr->cap = 0;
 }
