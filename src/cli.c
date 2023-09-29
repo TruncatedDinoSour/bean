@@ -27,6 +27,8 @@ CCMD(help) {
 }
 
 CCMD(sync) {
+    /* TODO */
+
     printf("hello %s, we will now sync all the cans !11111111111!\n", argv[0]);
     return 0;
 }
