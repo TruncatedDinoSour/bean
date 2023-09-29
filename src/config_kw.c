@@ -10,6 +10,7 @@ UChar kw_inited         = 0;
 
 const Kw kw_kws[] = {
     {"can", KW_NAME(can)},
+    {"note", KW_NAME(can)},
 };
 const size_t kw_kws_sz = sizeof(kw_kws) / sizeof(kw_kws[0]);
 
@@ -53,6 +54,13 @@ KW(can) {
         return log_error("`can` lacks argument -- can url ( `can https://can.example.com/` )");
 
     carray_append(&cfg->cans, line->arr[1]);
+
+    return 0;
+}
+
+KW(note) {
+    (void)line;
+    (void)cfg;
 
     return 0;
 }

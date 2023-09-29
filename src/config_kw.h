@@ -25,4 +25,5 @@ KwFn *kw_find(String);
 void kw_init(void);
 
 KW_DEF(can);
+KW_DEF(note);
 #endif /* _CONFIG_KW_H */

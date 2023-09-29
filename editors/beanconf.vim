@@ -28,10 +28,13 @@ syntax match bcNumber /-\d*/
 
 
 " Comments
-syntax region bcCommentLine start="# " end="$"    contains=bcTodo
+syntax region bcCommentLine start="note " end="$" contains=bcTodo
 
 " Booleans
 syntax keyword bcBoolean true false yes no
+
+" URLs
+syntax match bcURL /http[s]\?:\/\/[[:alnum:]%\/_#.-]*/
 
 " Set highlights
 highlight default link bcTodo        Todo
@@ -39,6 +42,7 @@ highlight default link bcKeyword     Keyword
 highlight default link bcCommentLine Comment
 highlight default link bcNumber      Number
 highlight default link bcBoolean     Boolean
+highlight default link bcURL         String
 
 
 " Set syntax
