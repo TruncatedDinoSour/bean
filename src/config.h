@@ -9,6 +9,6 @@ typedef struct {
 
 void config_init(void);
 UChar config_add(Config *, String);
-void config_del(void);
-UChar config_load(Config *);
+void config_destroy(Config *);
+UChar config_load(Config *, UChar);
 #endif /* _CONFIG_H */

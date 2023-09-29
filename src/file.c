@@ -14,7 +14,10 @@ char *read_line(int fd) {
 
     while ((read_size = read(fd, &c, 1)) > 0) {
         if (c == '\0' || c == '\n' || c == '\r') {
-            buffer[position] = '\0'; /* null-terminate the string */
+            if (position == 0)
+                continue;
+
+            buffer[position] = '\0';
             return buffer; /* return the line */
         }
 
@@ -26,7 +29,7 @@ char *read_line(int fd) {
             bufsize += LINE_GROWTH;
 
             if ((new_buffer = realloc(buffer, bufsize)) == NULL) {
-                free(buffer);
+                free_line(buffer);
                 return NULL; /* failed to reallocate memory */
             }
 
@@ -43,6 +46,10 @@ char *read_line(int fd) {
 
     /* no more lines to read */
 
-    free(buffer);
+    free_line(buffer);
     return NULL;
+}
+
+void free_line(char *line) {
+    free(line);
 }

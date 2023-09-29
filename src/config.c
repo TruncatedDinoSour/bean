@@ -1,10 +1,12 @@
 #include "config_kw.h"
+#include "logging.h"
 #include "config.h"
 #include "carray.h"
 #include "const.h"
 #include "types.h"
 #include "line.h"
 #include "file.h"
+#include "clrs.h"
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -12,39 +14,40 @@
 
 #include <stdio.h>
 
-static CArray _config_line_arr = {0};
-
 extern UChar kw_inited;
 
-void config_init(void) {
-    kw_init();
-}
+void config_init(void) { kw_init(); }
 
 UChar config_add(Config *cfg, String line) {
     KwFn fn;
-    UChar ret = 1;
+    CArray line_arr = {0};
 
     if (!kw_inited)
         return 1;
 
-    line_split(&_config_line_arr, line);
+    line_split(&line_arr, line);
 
-    if (_config_line_arr.size == 0)
-        goto __config_add_cleanup;
+    if (line_arr.size == 0)
+        return 1;
 
-    if ((fn = *kw_find(_config_line_arr.arr[0])) != NULL)
-        ret = fn(cfg, &_config_line_arr);
+    if ((fn = *kw_find(line_arr.arr[0])) != NULL)
+        return fn(cfg, &line_arr);
 
-__config_add_cleanup:
-    line_clear(&_config_line_arr);
-    return ret;
+    return 0;
 }
 
-void config_del(void) { line_destroy(&_config_line_arr); }
+void config_destroy(Config *cfg) {
+    while (cfg->cans.size)
+        free_line(cfg->cans.arr[--cfg->cans.size]);
 
-UChar config_load(Config *cfg) {
+    carray_destroy(&cfg->cans);
+}
+
+UChar config_load(Config *cfg, UChar logging) {
     char *line;
+    size_t line_n = 0;
     int fd;
+    UChar ret = 0;
 
     if ((fd = open(CONFIG_FILE, O_RDONLY)) == -1)
         return 1;
@@ -52,11 +55,17 @@ UChar config_load(Config *cfg) {
     config_init();
 
     while ((line = read_line(fd)) != NULL) {
-        config_add(cfg, line);
-        free(line);
+        ++line_n;
+
+        if ((ret = config_add(cfg, line)) != 0) {
+            if (logging)
+                flog_error("config failure at line %lu ( `%s` )\n", line_n,
+                           line);
+
+            break;
+        }
     }
 
     close(fd);
-
-    return 0;
+    return ret;
 }

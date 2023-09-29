@@ -11,12 +11,15 @@
 #include "config.h"
 #include "logging.h"
 
+#include <stdio.h>
+
 extern const Command cli_cmds[];
 
 int main(const int argc, String argv[]) {
     int fd;
     const Command *c;
     Config cfg = {0};
+    UChar ret;
 
     if (access(CONFIG_FILE, F_OK) != 0) {
         flog_info("creating config file " CLR_BOLD "`%s`\n", CONFIG_FILE);
@@ -33,12 +36,15 @@ int main(const int argc, String argv[]) {
     }
 
     flog_info("loading config file " CLR_BOLD "`%s`\n", CONFIG_FILE);
-    config_load(&cfg);
+
+    if ((ret = config_load(&cfg, 1)) != 0)
+        goto __main_cleanup;
 
     if (argc < 2) {
         log_error("no subcommand supplied");
-        CMD_NAME(help)(argv);
-        return 1;
+        CMD_NAME(help)(argv, &cfg);
+        ret = 1;
+        goto __main_cleanup;
     }
 
     c = find_command(argv[1], cli_cmds);
@@ -46,5 +52,9 @@ int main(const int argc, String argv[]) {
     if (c == NULL)
         return flog_error("no such subcommand " CLR_BOLD "`%s`\n", argv[1]);
 
-    return c->cmd(argv);
+    ret = c->cmd(argv, &cfg);
+
+__main_cleanup:
+    config_destroy(&cfg);
+    return ret;
 }

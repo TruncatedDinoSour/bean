@@ -26,8 +26,8 @@ void line_split(CArray *arr, String line) {
 
 void line_clear(CArray *arr) {
     if (arr->size) {
-        while (arr->size--)
-            free(arr->arr[arr->size]);
+        while (arr->size)
+            free(arr->arr[--arr->size]);
 
         carray_clear(arr);
     }

@@ -1,9 +1,9 @@
 #include <stddef.h>
 
 #include "config_kw.h"
+#include "logging.h"
+#include "carray.h"
 #include "types.h"
-
-#include <stdio.h>
 
 KwFn config_kws[KW_MAX] = {0};
 UChar kw_inited         = 0;
@@ -49,10 +49,10 @@ size_t kw_hash(MString key) {
 /* kws */
 
 KW(can) {
-    (void)cfg;
-    (void)line;
+    if (line->size < 2)
+        return log_error("`can` lacks argument -- can url ( `can https://can.example.com/` )");
 
-    puts("`can` called :3");
+    carray_append(&cfg->cans, line->arr[1]);
 
     return 0;
 }
